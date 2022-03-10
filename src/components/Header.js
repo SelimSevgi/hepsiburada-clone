@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { GrLocation } from "react-icons/gr";
 import { BsChevronDown } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
+import MenuItem from "./MenuItem";
+import { itemObj } from "../data/data";
+
 const links = [
   " Siparişlerim",
   "Süper Fiyat, Süper Teklif",
@@ -14,6 +17,43 @@ const links = [
   "Hepsiburada'da Satıcı Ol",
 ];
 export default function Header() {
+  const [Menu, setMenu] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [tab, setTab] = useState(false);
+  const [count, setCount] = useState(null);
+
+  function tabChange(searchBottom, index) {
+    let arr = [false, false, false, false, false, false, false, false, false];
+
+    // Menu[index] == true ? (arr[index] = false) : (arr[index] = true);
+
+    if (Menu[index] === false) {
+      console.log("index", Menu[index]);
+      arr[index] = true;
+      console.log("dasdas");
+    } else if (Menu[index] === true) {
+      arr[index] = false;
+    }
+    console.log("arr", arr);
+
+    setMenu(arr);
+
+    // //Menu[index] = !Menu[index];
+    // console.log(Menu);
+    setTab(searchBottom);
+    setCount(index);
+
+    // console.log("searchBottom", searchBottom, "index", index);
+  }
   return (
     <div className="flex flex-col w-full items-center justify-center ">
       <div className="w-9/12">
@@ -30,6 +70,7 @@ export default function Header() {
         </div>
         <div className="flex justify-center items-center flex-row mt-2">
           <svg
+            className="mr-10"
             width="171"
             height="28"
             viewBox="0 0 171 28"
@@ -42,17 +83,18 @@ export default function Header() {
             ></path>
           </svg>
 
-          <div className="flex flex-row border-gray-400  border-2 rounded w-80 h-12  justify-between">
+          <div className="flex flex-row border-[#919191]  border-2 rounded h-12  w-[530px] justify-between">
             <div className="flex flex-row justify-center items-center">
-              <AiOutlineSearch className="mx-2 w-5 h-5 text-gray-400" />
+              <AiOutlineSearch className="mx-2 w-5 h-5 text-[#919191]" />
               <form className="flex items-center ">
                 <input
+                  className="w-[440px] font-medium"
                   type="text"
                   placeholder="Ürün, kategori veya marka ara"
                 />
               </form>
             </div>
-            <div className=" flex justify-center items-center  bg-gray-400 text-white w-16 ">
+            <div className=" flex justify-center items-center  bg-[#919191] text-white w-16 ">
               ARA
             </div>
           </div>
@@ -67,7 +109,7 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center border-2 rounded text-gray-800 border-gray-400 p-2 w-40 h-12">
+          <div className="flex items-center justify-center border-2 rounded text-gray-800 border-[#919191] p-2 w-40 h-12">
             <BiUser className="w-6 h-6 mx-1 mr-3 text-gray-400 font-bold" />
             <div className="flex flex-col ">
               <span className="font-bold">Giriş Yap</span>
@@ -76,16 +118,31 @@ export default function Header() {
             <BsChevronDown className="ml-2" />
           </div>
 
-          <div className="flex items-center justify-center border-2 border-gray-400 bg-gray-400 text-white rounded w-32 h-12 ml-3 relative">
+          <div className="flex items-center justify-center border-2 border-[#919191] bg-[#919191] text-white rounded w-32 h-12 ml-3 relative">
             <FaShoppingCart className="w-5 h-5 mr-2 " />
-            <div className="bg-white text-gray-400 border-2 rounded-full px-1 w-4 h-4 flex items-center justify-center absolute left-7 top-2 ">
+            <div className="bg-white text-[#919191] border-2 border-[#919191] rounded-full px-1 w-4 h-4 flex items-center justify-center absolute left-7 top-2 ">
               <span className="text-xs">0</span>
             </div>
             <span>Sepetim</span>
           </div>
         </div>
       </div>
-      <div className="w-full h-2 flex ">
+      <div
+        className="w-full h-2 flex "
+        onClick={() =>
+          setMenu([
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ])
+        }
+      >
         <div className="w-1/6 bg-indigo-600" />
         <div className="w-1/6 bg-cyan-500" />
         <div className="w-1/6 bg-orange-600" />
@@ -93,8 +150,8 @@ export default function Header() {
         <div className="w-1/6 bg-violet-800" />
         <div className="w-1/6 bg-green-500" />
       </div>
-      <div className="w-full bg-[#f5f5f5] flex flex-row items-center justify-center h-[56px]  text-[#646464] font-bold">
-        <div className="w-[1200px] flex flex-row items-center justify-center">
+      <div className="w-full bg-[#f5f5f5] flex flex-row items-center justify-center h-[56px]  text-[#646464] font-bold ">
+        <div className="w-[60%] flex flex-row items-center justify-center relative ">
           {[
             "Elektronik",
             "Moda",
@@ -106,327 +163,43 @@ export default function Header() {
             "Süpermarket, Pet Shop",
             "Kitap, Müzik, Film, Hobi",
           ].map((searchBottom, index) => (
-            <div className="flex items-center">
-              <div className="h-[30px] w-[1px] bg-[#b4aeae]"> </div>
+            <div key={index} className="flex items-center ">
+              <div className="h-[30px] w-[1px] bg-[#b4aeae] "> </div>
               <span
-                className="  flex text-center justify-center items-center text-[14px]  px-6"
-                key={index}
+                className="  flex text-center justify-center items-center text-[14px]  px-6 cursor-pointer"
+                onClick={() => {
+                  tabChange(searchBottom, index);
+                }}
               >
                 {searchBottom}
               </span>
             </div>
           ))}
-        </div>
-      </div>
-      <div className="w-[1200px] flex flex-row justify-between items-start ">
-        <div className="w-[60%] flex flex-row mt-12 ">
-          <div className="w-[33.33%] flex flex-col text-left items-start ml-4 ">
-            <span className="font-[15px] font-bold text-[#ff6000] ">
-              Oto Aksesuar
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Lastik & Jantlar
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Kış, Yaz, 4 Mevsim, Bakım Ürünleri, Jant
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motor Yağı ve Yakıt Katkıları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Akü ve Akü Aksesuarları
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Aksesuar Ürünleri{" "}
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Paspas, Koltuk Kılıfı, Aydınlatma, Araç Dışı Aksesuar, Araç İçi
-              Aksesuar, Silecek, Branda
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Ses Ve Görüntü Sistemleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Navigasyon, Araç İçi Kamera, Teyp, Hoparlör, Amfi
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Bakım ve Temizlik Ürünleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Cila, Süpürge, Yıkama Şampuanları, Yağlayıcılar, Genel Çok Amaçlı
-              Temizlik Ürünleri, Diğer Tüm Temizlik ve Bakım Ürünleri
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Yedek Parçalar
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Far, Buji, Fren Balatası, Filtre, Seyahat Ürünleri, Trafik ve İlk
-              Yardım Setleri
-            </span>
-            <span className="font-[15px] font-bold text-[#ff6000]">
-              Tüm Motosiklet Ürünleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Modelleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motosiklet Aksesuarları
-            </span>
-            <span className="font-[15px] font-bold text-[#484848]">
-              Motosiklet Sürücü Giyim
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Kask, Mont & Ceket, Pantolon, Eldiven, Bot & Ayakkabı, Yağmurluk,
-              Sırt Çantası
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Koruma Ekipmanları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Çantaları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motosiklet Bakım ve Temizlik
-            </span>
-          </div>
-          <div className="w-[33.33%] flex flex-col text-left items-start ml-4 ">
-            <span className="font-[15px] font-bold text-[#ff6000] ">
-              Oto Aksesuar
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Lastik & Jantlar
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Kış, Yaz, 4 Mevsim, Bakım Ürünleri, Jant
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motor Yağı ve Yakıt Katkıları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Akü ve Akü Aksesuarları
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Aksesuar Ürünleri{" "}
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Paspas, Koltuk Kılıfı, Aydınlatma, Araç Dışı Aksesuar, Araç İçi
-              Aksesuar, Silecek, Branda
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Ses Ve Görüntü Sistemleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Navigasyon, Araç İçi Kamera, Teyp, Hoparlör, Amfi
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Bakım ve Temizlik Ürünleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Cila, Süpürge, Yıkama Şampuanları, Yağlayıcılar, Genel Çok Amaçlı
-              Temizlik Ürünleri, Diğer Tüm Temizlik ve Bakım Ürünleri
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Yedek Parçalar
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Far, Buji, Fren Balatası, Filtre, Seyahat Ürünleri, Trafik ve İlk
-              Yardım Setleri
-            </span>
-            <span className="font-[15px] font-bold text-[#ff6000]">
-              Tüm Motosiklet Ürünleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Modelleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motosiklet Aksesuarları
-            </span>
-            <span className="font-[15px] font-bold text-[#484848]">
-              Motosiklet Sürücü Giyim
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Kask, Mont & Ceket, Pantolon, Eldiven, Bot & Ayakkabı, Yağmurluk,
-              Sırt Çantası
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Koruma Ekipmanları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Çantaları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motosiklet Bakım ve Temizlik
-            </span>
-          </div>
-          <div className="w-[33.33%] flex flex-col text-left items-start ml-4 ">
-            <span className="font-[15px] font-bold text-[#ff6000] ">
-              Oto Aksesuar
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Lastik & Jantlar
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Kış, Yaz, 4 Mevsim, Bakım Ürünleri, Jant
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motor Yağı ve Yakıt Katkıları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Akü ve Akü Aksesuarları
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Aksesuar Ürünleri{" "}
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Paspas, Koltuk Kılıfı, Aydınlatma, Araç Dışı Aksesuar, Araç İçi
-              Aksesuar, Silecek, Branda
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Ses Ve Görüntü Sistemleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Navigasyon, Araç İçi Kamera, Teyp, Hoparlör, Amfi
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Oto Bakım ve Temizlik Ürünleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Cila, Süpürge, Yıkama Şampuanları, Yağlayıcılar, Genel Çok Amaçlı
-              Temizlik Ürünleri, Diğer Tüm Temizlik ve Bakım Ürünleri
-            </span>
-            <span className="font-[13px] font-bold text-[#484848] ">
-              Yedek Parçalar
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Far, Buji, Fren Balatası, Filtre, Seyahat Ürünleri, Trafik ve İlk
-              Yardım Setleri
-            </span>
-            <span className="font-[15px] font-bold text-[#ff6000]">
-              Tüm Motosiklet Ürünleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Modelleri
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motosiklet Aksesuarları
-            </span>
-            <span className="font-[15px] font-bold text-[#484848]">
-              Motosiklet Sürücü Giyim
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Kask, Mont & Ceket, Pantolon, Eldiven, Bot & Ayakkabı, Yağmurluk,
-              Sırt Çantası
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Koruma Ekipmanları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              Motosiklet Çantaları
-            </span>
-            <span className="font-[13px]  text-[#484848] ">
-              {" "}
-              Motosiklet Bakım ve Temizlik
-            </span>
-          </div>
-        </div>
-        <div className="w-[40%] flex flex-col ">
-          <div className=" flex flex-row justify-between  ">
-            <div className="w-[50%] flex flex-col ">
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-               
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px]  rounded m-4 "
-              ></img>
-            </div>
-            <div className="w-[50%]  flex flex-col ">
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-              <img
-                src="https://design.hepsiburada.net/assets/storefront/banners/24-03-2020_1618818116037_1.png"
-                alt="prop"
-                className=" h-[80px] rounded m-4 "
-              ></img>
-            </div>
-          </div>
-          <div className="w-full ">
-            <img
-              src="https://images.hepsiburada.net/banners/0/banner_20211027130242.png"
-              alt="prop"
-              className=" bg-[#b4aeae] rounded m-4 "
-            ></img>
-            <img
-              src="https://images.hepsiburada.net/banners/0/banner_20211027130242.png"
-              alt="prop"
-              className=" bg-[#b4aeae] rounded m-4 "
-            ></img>
-          </div>
+          {Menu[count] === true ? (
+            <MenuItem
+              data={
+                tab === "Elektronik"
+                  ? itemObj.Elektronik
+                  : tab === "Moda"
+                  ? itemObj.Moda
+                  : tab === "Ev, Yaşam, Kırtasiye, Ofis"
+                  ? itemObj.Ev
+                  : tab === "Oto, Bahçe, Yapı Market"
+                  ? itemObj.Oto
+                  : tab === "Anne, Bebek, Oyuncak"
+                  ? itemObj.Anne
+                  : tab === "Spor, Outdoor"
+                  ? itemObj.Spor
+                  : tab === "Kozmetik, Kişisel Bakım"
+                  ? itemObj.Kozmetik
+                  : tab === "Süpermarket, Pet Shop"
+                  ? itemObj.Supermarket
+                  : tab === "Kitap, Müzik, Film, Hobi"
+                  ? itemObj.Kitap
+                  : null
+              }
+            />
+          ) : null}
         </div>
       </div>
     </div>
