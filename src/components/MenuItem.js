@@ -1,4 +1,3 @@
-
 import React from "react";
 
 export default function MenuItem({ data }) {
@@ -61,7 +60,7 @@ export default function MenuItem({ data }) {
         </div>
         <div className="grid grid-cols-2 w-[40%]">
           {data.img.map((t, i) => (
-            <img key={i} src={t} />
+            <img key={i} src={t} alt="" />
           ))}
         </div>
       </div>
