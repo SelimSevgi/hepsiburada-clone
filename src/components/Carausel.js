@@ -1,13 +1,17 @@
 import React from "react";
 import { MdOutlineIosShare } from "react-icons/md";
 import { BsArrowRight } from "react-icons/bs";
+import { TiArrowSortedDown } from "react-icons/ti";
 export default function Carausel() {
   return (
     <div className="w-full h-[540px] bg-orange-400 flex flex-col items-center">
-      <div className="mt-3 w-[80%] flex justify-center items-center ">
-        <span className="text-white font-bold text-[17px] mr-8 cursor-pointer transition ease-in-out delay-100  focus:bg-white focus:text-black focus:border-[1px] focus:rounded-[150px] focus:p-2">
-          Sana Özel
-        </span>
+      <div className="mt-3 w-[80%] flex justify-center items-center relative">
+        <div className="flex justify-center items-center flex-col">
+          <span className="text-black font-bold text-[15px] mr-8 cursor-pointer transition ease-in-out delay-100 bg-white p-2  rounded-[100px] focus:p-2">
+            Sana Özel
+          </span>
+          <TiArrowSortedDown className="text-white absolute bottom-[-10px] left-[340px] " />
+        </div>
         <span className="text-white font-bold text-[17px] mr-8 cursor-pointer transition ease-in-out delay-100  focus:bg-white focus:text-black focus:border-[1px] focus:rounded-[150px] focus:p-2">
           Bugüne Özel
         </span>
@@ -50,14 +54,14 @@ export default function Carausel() {
           ></img>
         </div>
       </div>
-      <div>
+      <div className="flex flex-row justify-center items-center mt-7">
         <img
-          className="w-[71px] h-[40px]"
+          className="w-[71px] h-[40px] border-[2px] rounded-3xl p-[1px]"
           src="https://images.hepsiburada.net/banners/s/0/71-40/thumbnailImage2112_20220314142732.png/format:webp"
         ></img>
-        <div className="w-[200px] h-[36px] flex flex-row border-[1px] rounded-2xl">
-          Bugüne Özel
-          <BsArrowRight />
+        <div className="w-[200px] h-[36px] flex flex-row border-[1px] rounded-2xl  justify-center items-center ml-8 text-[#e4d9c5] delay-75  hover:text-white cursor-pointer">
+          Ramazan Alışverişi
+          <BsArrowRight className="ml-3 " />
         </div>
       </div>
     </div>
