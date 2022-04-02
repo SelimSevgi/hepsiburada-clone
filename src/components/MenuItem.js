@@ -4,7 +4,7 @@ export default function MenuItem({ data }) {
   console.log("subtitle : ", data.subtitle);
   console.log("uzunluk: ", data.title.length);
   return (
-    <div className="w-full  flex flex-row justify-between items-start absolute  top-16  bg-white shadow-xl rounded-lg ">
+    <div className="w-full  flex flex-row justify-between items-start absolute  top-16  bg-white shadow-xl rounded-lg z-10">
       <div className="flex flex-row justify-between  w-full  ">
         <div className={data.subtitle === undefined ? "w-[0] " : "w-[20%] "}>
           {data.subtitle === undefined
